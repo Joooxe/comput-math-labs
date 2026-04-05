@@ -68,7 +68,7 @@ def solve_least_squares_qr(A, b):
         raise ValueError("Размер вектора b должен совпадать с числом строк матрицы A")
 
     Q, R = modified_gram_schmidt_qr(A)
-    y = np.dot(Q.T, b)
+    y = np.dot(Q.T, b) # по условию можно
     x = back_substitution(R, y)
     return Q, R, x
 
@@ -101,11 +101,9 @@ def test_square_case():
     diff_norm = np.linalg.norm(x_qr - x_np)
     print(f"Норма разности решений: {diff_norm:.12e} \n")
 
-    # A ≈ QR
     reconstruction_error = np.linalg.norm(A - Q @ R)
     print(f"Норма ||A - QR||: {reconstruction_error:.12e} \n")
 
-    # ортонормированность столбцов Q
     orthogonality_error = np.linalg.norm(Q.T @ Q - np.eye(Q.shape[1]))
     print(f"Норма ||Q^T Q - I||: {orthogonality_error:.12e} \n")
 
